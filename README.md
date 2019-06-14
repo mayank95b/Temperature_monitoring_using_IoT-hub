@@ -28,7 +28,7 @@ Hardware components:
 Procedure:
 
 Step1 :
-Download the sample Python project from https://github.com/Azure-Samples/azure-iot-samples-python/archive/master.zip and extract the ZIP archive
+Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
 Step2 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
@@ -52,27 +52,23 @@ Below are the areas of the file which require changing and the values required (
 uncomment the Pin=4 line and put comment in Beaglebone pin.change Dht22 to Dht11.
 
 Step4 :
-Now, In a local terminal window, navigate to the root folder of the sample Python project.
+Now, In a local terminal window, navigate to the root folder of the Python project.
+Open the Dht11Azure.py file in a text editor of your choice.
 
-Then navigate to the iot-hub\Quickstarts\simulated-device folder
+Replace the value of the CONNECTION_STRING variable with the device connection string you made a note of previously. Then save your changes to Dht11Azure.py file
 
-step5 :
-Open the SimulatedDevice.py file in a text editor of your choice.
 
-Replace the value of the CONNECTION_STRING variable with the device connection string
-and also add the code of simpletest.py in it and Then save your changes to SimulatedDevice.py file.(or create a new file and copy the code in it)
-
-Step6 :
+Step5 :
 In the local terminal window, run the following commands to install the required libraries for the simulated device application:
 
 pip install azure-iothub-device-client
 
-Step7 :
-In the local terminal window, run the following commands to run the simulated device application:
-
-python <urfilename>.py
-
 Step6 :
+In the local terminal window, run the following commands to run the DHT11 device application:
+
+python Dht11Azure.py
+
+Step7 :
 Read the telemetry from your hub
 
 •	The IoT Hub CLI extension can connect to the service-side Events endpoint on your IoT Hub. The extension receives the device-to-cloud messages sent from your simulated device. An IoT Hub back-end application typically runs in the cloud to receive and process device-to-cloud messages.
