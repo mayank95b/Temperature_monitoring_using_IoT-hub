@@ -28,6 +28,9 @@ Hardware components:
 Procedure:
 
 Step1 :
+Create an IoT hub
+Refer the DHT11AzureMqtt.doc for detail.
+Step2 :
 Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
 Step2 :
