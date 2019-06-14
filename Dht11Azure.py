@@ -1,116 +1,109 @@
 import Adafruit_DHT
-import iothub_client
-from iothub_client import *
-from iothub_client_args import *
-import sys
-import time
-from time import gmtime, strftime
 
+# Sensor should be set to Adafruit_DHT.DHT11,
+# Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 sensor = Adafruit_DHT.DHT11
+
+# Example using a Beaglebone Black with DHT sensor
+# connected to pin P8_11.
+#pin = 'P8_11'
+
+# Example using a Raspberry Pi with DHT sensor
+# connected to GPIO23.
 pin = 4
 
-message_timeout = 10000
+# Try to grab a sensor reading.  Use the read_retry method which will retry up
+# to 15 times to get a sensor reading (waiting 2 seconds between each retry).
+humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+# Copyright (c) Microsoft. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-receive_context = 0
-avg_wind_speed = 10.0
-message_count = 5
-received_count = 0
+import random
+import time
+import sys
 
-# global counters
-receive_callbacks = 0
-send_callbacks = 0
-blob_callbacks = 0
+# Using the Python Device SDK for IoT Hub:
+#   https://github.com/Azure/azure-iot-sdk-python
+# The sample connects to a device-specific MQTT endpoint on your IoT Hub.
+import iothub_client
+# pylint: disable=E0611
+from iothub_client import IoTHubClient, IoTHubClientError, IoTHubTransportProvider, IoTHubClientResult
+from iothub_client import IoTHubMessage, IoTHubMessageDispositionResult, IoTHubError, DeviceMethodReturnValue
 
-# chose HTTP, AMQP or MQTT as transport protocol
-protocol = IoTHubTransportProvider.AMQP
-connection_string = "HostName=IoThub-ds.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=qGJPJkZlif3HcAV5Y/FTiJ5wnvcoGg6rFl/GmvWFRU8="
+# The device connection string to authenticate the device with your IoT hub.
+# Using the Azure CLI:
+# az iot hub device-identity show-connection-string --hub-name {YourIoTHubName} --device-id MyNodeDevice --output table
+CONNECTION_STRING = "Enter ur Azure IoT device connection string"
 
+# Using the MQTT protocol.
+PROTOCOL = IoTHubTransportProvider.MQTT
+MESSAGE_TIMEOUT = 10000
 
+# Define the JSON message to send to IoT Hub.
+TEMPERATURE = 20.0
+HUMIDITY = 60
+MSG_TXT = "{\"humidity\": %.2f,\"temperature\": %.2f}"
 
-def iothub_client_init():
-    # prepare iothub client
-    iotHubClient = IoTHubClient(connection_string, protocol)
-    if iotHubClient.protocol == IoTHubTransportProvider.HTTP:
-        iotHubClient.set_option("timeout", timeout)
-        iotHubClient.set_option("MinimumPollingTime", minimum_polling_time)
-    # set the time until a message times out
-    iotHubClient.set_option("messageTimeout", message_timeout)
-    # some embedded platforms need certificate information
-    # set_certificates(iotHubClient)
-    # to enable MQTT logging set to 1
-    if iotHubClient.protocol == IoTHubTransportProvider.MQTT:
-        iotHubClient.set_option("logtrace", 0)
-    iotHubClient.set_message_callback(
-        receive_message_callback, receive_context)
-    return iotHubClient
-
-def receive_message_callback(message, counter):
-    global receive_callbacks
-    buffer = message.get_bytearray()
-    size = len(buffer)
-    print("Received Message [%d]:" % counter)
-    print("    Data: <<<%s>>> & Size=%d" % (buffer[:size].decode('utf-8'), size))
-    map_properties = message.properties()
-    key_value_pair = map_properties.get_internals()
-    print("    Properties: %s" % key_value_pair)
-    counter += 1
-    receive_callbacks += 1
-    print("    Total calls received: %d" % receive_callbacks)
-    return IoTHubMessageDispositionResult.ACCEPTED
-
+INTERVAL = 1
 
 def send_confirmation_callback(message, result, user_context):
-    global send_callbacks
-    print(
-        "Confirmation[%d] received for message with result = %s" %
-        (user_context, result))
-    map_properties = message.properties()
-    print("    message_id: %s" % message.message_id)
-    print("    correlation_id: %s" % message.correlation_id)
-    key_value_pair = map_properties.get_internals()
-    print("    Properties: %s" % key_value_pair)
-    send_callbacks += 1
-    print("    Total calls confirmed: %d" % send_callbacks)
+    print ( "IoT Hub responded to message with status: %s" % (result) )
 
+def iothub_client_init():
+    # Create an IoT Hub client
+    client = IoTHubClient(CONNECTION_STRING, PROTOCOL)
+    return client
 
+# Handle direct method calls from IoT Hub
+def device_method_callback(method_name, payload, user_context):
+    global INTERVAL
+    print ( "\nMethod callback called with:\nmethodName = %s\npayload = %s" % (method_name, payload) )
+    device_method_return_value = DeviceMethodReturnValue()
+    if method_name == "SetTelemetryInterval":
+        try:
+            INTERVAL = int(payload)
+            # Build and send the acknowledgment.
+            device_method_return_value.response = "{ \"Response\": \"Executed direct method %s\" }" % method_name
+            device_method_return_value.status = 200
+        except ValueError:
+            # Build and send an error response.
+            device_method_return_value.response = "{ \"Response\": \"Invalid parameter\" }"
+            device_method_return_value.status = 400
+    else:
+        # Build and send an error response.
+        device_method_return_value.response = "{ \"Response\": \"Direct method not defined: %s\" }" % method_name
+        device_method_return_value.status = 404
+    return device_method_return_value
+
+def iothub_client_telemetry_sample_run():
+
+    try:
+        client = iothub_client_init()
+        print ( "IoT Hub device sending periodic messages, press Ctrl-C to exit" )
+
+        # Set up the callback method for direct method calls from the hub.
+        client.set_device_method_callback(
+            device_method_callback, None)
+
+        while True:
+            # Build the message with simulated telemetry values.
+            
+            msg_txt_formatted = MSG_TXT % (humidity, temperature)
+            message = IoTHubMessage(msg_txt_formatted)
+
+    
+            # Send the message.
+            print( "Sending message: %s" % message.get_string() )
+            client.send_event_async(message, send_confirmation_callback, None)
+            time.sleep(INTERVAL)
+
+    except IoTHubError as iothub_error:
+        print ( "Unexpected error %s from IoTHub" % iothub_error )
+        return
+    except KeyboardInterrupt:
+        print ( "IoTHubClient sample stopped" )
 
 if __name__ == '__main__':
-    print(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()))
-    print('Attempting a read of DHT11')
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-      
-    #Loop until a reading has been made as the DHT11 sometimes failes to read
-    while humidity is None and temperature is None:
-        time.sleep(2)
-        print('Attempting a read of DHT11')
-  humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-  print(humidity, temprature)
-  
-    print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
-    
-    #Initate the IoT hub
-    iotHubClient = iothub_client_init()
-
-    (connection_string, protocol) = get_iothub_opt(sys.argv[1:], connection_string, protocol)
-    
-    #Send the reading message to the IoT hub
-    msg_txt = "{\"DeviceRef\": \"PiDevice1\",\"Temp\": %.2f, \"Humidity\": %.2f}"
-    msg_txt_formatted = msg_txt % (temperature,humidity)
-    print("JSON payload = " + msg_txt_formatted)
-
-    message = IoTHubMessage(msg_txt_formatted)
-    
-    i = 1  #1 message per exe so static 1
-    
-    message.message_id = "message_%d" % i
-    message.correlation_id = "correlation_%d" % i
-    iotHubClient.send_event_async(message, send_confirmation_callback,i)
-   
-    #The following is required to ensure the program doesn't end before the message is sent 
-    #as will result in a DESTROIED message status
-    n = 0
-    while n < 3:
-        status = iotHubClient.get_send_status()
-        print("Send status: %s" % status)
-        time.sleep(10)
-        n += 1
+    print ( "IoT Hub Quickstart #2 - Simulated device" )
+    print ( "Press Ctrl-C to exit" )
+    iothub_client_telemetry_sample_run()
