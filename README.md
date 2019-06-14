@@ -1,15 +1,15 @@
 # DHT11SensorAzure-IoT-hub-Rasp
 
-Hardware components:
-Raspberry Pi 3
-DHT11 Temperature & Humidity Sensor (3 pins)
-
 Overview of DHT11 Sensor:
+
 The DHT11 sensor can measure relative humidity and temperature with the following specifications:
 
 Temperature Range: 0-50°C
+
 Temperature Accuracy: ±2 °C
+
 Humidity Range: 20-90% RH
+
 Humidity Accuracy: ±5 %
 
 How DHT11 Sensor works:
@@ -17,8 +17,11 @@ The DHT11 sensor comes with a blue or white colour casing. Inside this casing we
 The other component is a surface mounted NTC Thermistor. The term NTC stands for Negative temperature coefficient, for increase in temperature the value of resistance will decrease
 
 Hardware components:
+
 •	Raspberry Pi 3
+
 •	DHT11 Temperature & Humidity Sensor (3 pins)
+
 Procedure:
 
 Step1 :
@@ -27,9 +30,13 @@ Download the sample Python project from https://github.com/Azure-Samples/azure-i
 Step2 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
 •	Enter the four command lines one by one on the terminal to install the DHT library:
+
 pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
+
 pi@raspberrypi:~ $ cd Adafruit_Python_DHT
+
 pi@raspberrypi:~ $ sudo apt-get install build-essential python-dev 
+
 pi@raspberrypi:~ $ sudo python setup.py install
 
 Step3 :
