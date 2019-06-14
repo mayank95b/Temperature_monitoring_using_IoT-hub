@@ -1,5 +1,7 @@
 # DHT11SensorAzure-IoT-hub-Rasp
 
+Sending DHT11 Temperature and Humidity sensor data to Azure IoT hub and Monitoring the real time data.
+
 Overview of DHT11 Sensor:
 
 The DHT11 sensor can measure relative humidity and temperature with the following specifications:
