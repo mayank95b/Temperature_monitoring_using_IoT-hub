@@ -1,5 +1,7 @@
 import Adafruit_DHT
-
+import random
+import time
+import sys
 # Sensor should be set to Adafruit_DHT.DHT11,
 # Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 sensor = Adafruit_DHT.DHT11
@@ -18,9 +20,6 @@ humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import random
-import time
-import sys
 
 # Using the Python Device SDK for IoT Hub:
 #   https://github.com/Azure/azure-iot-sdk-python
