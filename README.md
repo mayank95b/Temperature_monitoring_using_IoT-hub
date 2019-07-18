@@ -34,7 +34,7 @@ Create an IoT hub
 
 Step2 :
     
-    Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
+   Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
 Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
