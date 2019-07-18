@@ -30,22 +30,23 @@ Procedure:
 Step1 :
 Create an IoT hub
 
-Refer the DHT11AzureMqtt.doc for detail.
+    Refer the DHT11AzureMqtt.doc for detail.
 
 Step2 :
-Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
+    
+    Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
 Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
 •	Enter the four command lines one by one on the terminal to install the DHT library:
 
-pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
+    pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
 
-pi@raspberrypi:~ $ cd Adafruit_Python_DHT
+    pi@raspberrypi:~ $ cd Adafruit_Python_DHT
 
-pi@raspberrypi:~ $ sudo apt-get install build-essential python-dev 
+    pi@raspberrypi:~ $ sudo apt-get install build-essential python-dev 
 
-pi@raspberrypi:~ $ sudo python setup.py install
+    pi@raspberrypi:~ $ sudo python setup.py install
 
 Step4 :
 Before continuing any further I do recommend testing the DHT11 sensor is working correctly.
@@ -54,7 +55,7 @@ This can quickly be done by changing some of the lines of the file simpletest.py
 
 Below are the areas of the file which require changing and the values required (e.g. pin = 4) to enable the test script to work:
 
-uncomment the Pin=4 line and put comment in Beaglebone pin.change Dht22 to Dht11.
+    uncomment the Pin=4 line and put comment in Beaglebone pin.change Dht22 to Dht11.
 
 Step5 :
 Now, In a local terminal window, navigate to the root folder of the Python project.
@@ -66,12 +67,12 @@ Replace the value of the CONNECTION_STRING variable with the device connection s
 Step6 :
 In the local terminal window, run the following commands to install the required libraries for the simulated device application:
 
-pip install azure-iothub-device-client
+    pip install azure-iothub-device-client
 
 Step7 :
 In the local terminal window, run the following commands to run the DHT11 device application:
 
-python Dht11Azure.py
+    python Dht11Azure.py
 
 Step8 :
 Read the telemetry from your hub
@@ -80,7 +81,7 @@ Read the telemetry from your hub
 
 •	Run the following commands in Azure Cloud Shell, replacing YourIoTHubName with the name of your IoT hub:
 
->>az iot hub monitor-events --hub-name YourIoTHubName --device-id <urdevicename>
+    >>az iot hub monitor-events --hub-name YourIoTHubName --device-id <urdevicename>
 
 To avoid the import iothub_client error
 
