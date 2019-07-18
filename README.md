@@ -38,6 +38,7 @@ Step2 :
 
 Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
+
 •	Enter the four command lines one by one on the terminal to install the DHT library:
 
     pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
