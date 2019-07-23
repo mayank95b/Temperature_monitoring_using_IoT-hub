@@ -95,5 +95,5 @@ Check that you have the right version of C++ runtime Microsoft Visual C++ Redist
 Verify that you have installed the iothub client: pip install azure-iothub-device-client.
 
 
-
+     apt-get install libboost-python1.62.0
 
