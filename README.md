@@ -1,7 +1,7 @@
 # Temparature and Humidity Monitoring System on Azure IoT-hub
 Monitoring Temperature and Humidity data on Azure IoT hub in real time.
 
-Overview of DHT11 Sensor:
+### Overview of DHT11 Sensor:
 
 The DHT11 sensor can measure relative humidity and temperature with the following specifications:
 
@@ -38,8 +38,6 @@ Step2 :
 Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
 
-•	Enter the four command lines one by one on the terminal to install the DHT library:
-
     pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
 
     pi@raspberrypi:~ $ cd Adafruit_Python_DHT
@@ -49,9 +47,7 @@ Installing the Adafruit DHT11 library on Raspberry Pi:
     pi@raspberrypi:~ $ sudo python setup.py install
 
 Step4 :
-Before continuing any further I do recommend testing the DHT11 sensor is working correctly.
-
-This can quickly be done by changing some of the lines of the file simpletest.py in the location: /Adafruit_Python_DHT/examples/
+Before continuing any further I do recommend testing the DHT11 sensor is working correctly.This can quickly be done by changing some of the lines of the file simpletest.py in the location: /Adafruit_Python_DHT/examples/
 
 Below are the areas of the file which require changing and the values required (e.g. pin = 4) to enable the test script to work:
 
