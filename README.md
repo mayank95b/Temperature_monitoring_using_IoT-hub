@@ -1,6 +1,5 @@
-# DHT11SensorAzure-IoT-hub-Rasp
-
-Sending DHT11 Temperature and Humidity sensor data to Azure IoT hub and Monitoring the real time data.
+# Temparature and Humidity Monitoring System on Azure IoT-hub
+Monitoring Temperature and Humidity data on Azure IoT hub in real time.
 
 Overview of DHT11 Sensor:
 
@@ -14,27 +13,27 @@ Humidity Range: 20-90% RH
 
 Humidity Accuracy: ±5 %
 
-How DHT11 Sensor works:
+### How DHT11 Sensor works:
 
 The DHT11 sensor comes with a blue or white colour casing. Inside this casing we have two important componentswhich help us to sense the relative humidity and temperature. The first component is a pair of electrodes; the electrical resistance between these two electrodes is decided by a moisture holding substrate. So the measured resistance is inversely proportional to the relative humidity of the environment. Higher the relative humidity lower will be the value of resistance and vice versa.  Also note that Relative humidity is different from actual humidity. Relative humidity measures the water content in air relative to the temperature in the air.
 The other component is a surface mounted NTC Thermistor. The term NTC stands for Negative temperature coefficient, for increase in temperature the value of resistance will decrease
 
-Hardware components:
+### Hardware components:
 
 •	Raspberry Pi 3
 
 •	DHT11 Temperature & Humidity Sensor (3 pins)
 
-Procedure:
+### Procedure:
 
-Step1 :
+- Step1 :
 Create an IoT hub
 
     Refer the DHT11AzureMqtt.doc for detail.
 
 Step2 :
     
-   Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
+     Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
 Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
