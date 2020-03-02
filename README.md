@@ -31,11 +31,11 @@ Create an IoT hub
 
     Refer the DHT11AzureMqtt.doc for detail.
 
-Step2 :
+- Step2 :
     
      Download the Python project from https://github.com/mayank95b/DHT11SensorAzure-IoT-hub-Rasp.git and extract the ZIP archive.
 
-Step3 :
+- Step3 :
 Installing the Adafruit DHT11 library on Raspberry Pi:
 
     pi@raspberrypi:~ $ git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
@@ -46,31 +46,31 @@ Installing the Adafruit DHT11 library on Raspberry Pi:
 
     pi@raspberrypi:~ $ sudo python setup.py install
 
-Step4 :
+- Step4 :
 Before continuing any further I do recommend testing the DHT11 sensor is working correctly.This can quickly be done by changing some of the lines of the file simpletest.py in the location: /Adafruit_Python_DHT/examples/
 
 Below are the areas of the file which require changing and the values required (e.g. pin = 4) to enable the test script to work:
 
     uncomment the Pin=4 line and put comment in Beaglebone pin.change Dht22 to Dht11.
 
-Step5 :
+- Step5 :
 Now, In a local terminal window, navigate to the root folder of the Python project.
 Open the Dht11Azure.py file in a text editor of your choice.
 
 Replace the value of the CONNECTION_STRING variable with the device connection string you made a note of previously. Then save your changes to Dht11Azure.py file
 
 
-Step6 :
+- Step6 :
 In the local terminal window, run the following commands to install the required libraries for the simulated device application:
 
     pip install azure-iothub-device-client
 
-Step7 :
+- Step7 :
 In the local terminal window, run the following commands to run the DHT11 device application:
 
     python Dht11Azure.py
 
-Step8 :
+- Step8 :
 Read the telemetry from your hub
 
 •	The IoT Hub CLI extension can connect to the service-side Events endpoint on your IoT Hub. The extension receives the device-to-cloud messages sent from your simulated device. An IoT Hub back-end application typically runs in the cloud to receive and process device-to-cloud messages.
